@@ -1,4 +1,0 @@
-﻿  main.c
-C:\Users\pedri\OneDrive\UBC\3 Year\Cpsc 259\LAB1\Lab1_v2\Lab1_v2\main.c(50,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int *'
-C:\Users\pedri\OneDrive\UBC\3 Year\Cpsc 259\LAB1\Lab1_v2\Lab1_v2\main.c(51,12): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'int *'
-  Lab1_v2.vcxproj -> C:\Users\pedri\OneDrive\UBC\3 Year\Cpsc 259\LAB1\Lab1_v2\Debug\Lab1_v2.exe

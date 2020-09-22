@@ -14,4 +14,3 @@ void process(int data[]) {
 for (int index = 0; index < SIZE; index++)
     data[index] = 0;
 }
-
