@@ -7,9 +7,9 @@ The tide measurement file is a txt file whose name
 corresponds to the name defined in the preprocessor
 directive.  It is a series of NUMBER_OF_READINGS tidal
 readings (in mm) taken hourly.
-Author:			  Your names
-Student #s:		12345678 and 12345678
-CS Accounts:	a1a1 and b2b2
+Author:			  Pedro Leite & Amanda Zhang
+Student #s:		61981213 and 12345678
+CS Accounts:	 q8i2b and b2b2
 Date:				  Add the date here
 */
 
@@ -42,6 +42,8 @@ of the readings array to
 NUMBER_OF_READINGS + FFT_ALGOR_BUFFER */
 #define FILE_NAME           "puddlejump.txt"
 #define RESULT_FILE_NAME    "result.txt"
+#define READINGS_FILE_NAME    "amplitude.txt"
+#define FREQ_FILE_NAME    "freq.txt"
 
 /*
 Function contains all the steps of analysis.
@@ -69,7 +71,7 @@ void run_analysis()
   */
 
  for(i = 0; i<NUMBER_OF_READINGS;i++){
-   omega[i] = (double)i*SAMPLING_FREQUENCY/NUMBER_OF_READINGS;
+   omega[i] = (double)i*(double)SAMPLING_FREQUENCY/(double)NUMBER_OF_READINGS;
  }
 
   /* Opens the file (a text file, not a binary file) for reading, and not writing,
@@ -99,7 +101,7 @@ void run_analysis()
   array and change each readings[i] to equal (readings[i]^2 + complex_component[i]^2)^(1/2)
   */
   for (i = 0; i < NUMBER_OF_READINGS; i++) {
-      readings[i] = (double)pow((double)pow(readings[i], 2) + (double)pow(complex_component[i], 2), (1 / 2));
+      readings[i] = (double)pow(((double)pow(readings[i], 2) + (double)pow(complex_component[i], 2)), (0.5));
   }
 
 
@@ -121,7 +123,7 @@ void run_analysis()
   {
     if(omega[i] >= NOISE_FILTER)
     {
-      if(frequency<readings[i])
+      if(amplitude<readings[i])
       {
         amplitude = readings[i];
         frequency = omega[i];
@@ -143,10 +145,41 @@ void run_analysis()
   /* DO NOT MODIFY THIS LINE */
   fprintf(file_pointer, "Puddlejump tidal frequency: %f per day\n", frequency);
 
+
   /* Closes the result file */
   if (file_pointer != NULL){
     fclose(file_pointer);
   }
+
+  fopen_s(&file_pointer, READINGS_FILE_NAME, "w"); // (for Visual Studio)
+//  file_pointer = fopen(RESULT_FILE_NAME, "w"); //(for GradeScope submission)
+
+/* Writes the result to the file */
+/* DO NOT MODIFY THIS LINE */
+  for (i = 0; i < NUMBER_OF_READINGS; i++) {
+      fprintf(file_pointer, "%f\n", readings[i]);
+  }
+
+  /* Closes the result file */
+  if (file_pointer != NULL) {
+      fclose(file_pointer);
+  }
+
+
+  fopen_s(&file_pointer, FREQ_FILE_NAME, "w"); // (for Visual Studio)
+//  file_pointer = fopen(RESULT_FILE_NAME, "w"); //(for GradeScope submission)
+
+/* Writes the result to the file */
+/* DO NOT MODIFY THIS LINE */
+  for (i = 0; i < NUMBER_OF_READINGS; i++) {
+      fprintf(file_pointer, "%f\n", omega[i]);
+  }
+
+  /* Closes the result file */
+  if (file_pointer != NULL) {
+      fclose(file_pointer);
+  }
+
 
   /* And that's it */
   printf("Analysis complete, result.txt created\n");
@@ -179,7 +212,7 @@ void process_file(double array_to_populate[], FILE* pointer_to_data_file)
       /* Tries to extract MAX_VALUES_PER_LINE ints from the line buffer and assign
       them to local array cells using sscanf_s or equivalent.  Stores the return
       value in a local int */
-      values_per_line = sscanf_s(line_buffer, "%d %d %d %d", &extracted_values[0], &extracted_values[1], &extracted_values[2], &extracted_values[3]); //(for Visual Studio)
+      values_per_line = sscanf_s(line_buffer, "%d %d %d %d %d %d %d", &extracted_values[0], &extracted_values[1], &extracted_values[2], &extracted_values[3], &extracted_values[4], &extracted_values[5], &extracted_values[6]); //(for Visual Studio)
       //values_per_line = sscanf(line_buffer, "%d %d %d %d", &extracted_values[0], &extracted_values[1], &extracted_values[2], &extracted_values[3]);// (for GradeScope submission)
 
 
